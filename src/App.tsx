@@ -1,44 +1,25 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import FavoritesScreen from './screens/FavoritesScreen';
-import HomeScreen, {TabHeaderHome} from './screens/HomeScreen';
-import SearchScreen from './screens/SearchScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import DefaultHeader from './components/DefaultHeader';
+import HomeBottomTabNavigator from './navigation/HomeBottomTabNavigator';
 
-const Tab = createBottomTabNavigator();
-
-function TabNavigationHeader({}): React.JSX.Element {
-  return (
-    <View
-      style={{
-        height: 60,
-      }}>
-      <Text>Hello</Text>
-    </View>
-  );
-}
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.safeArea}>
-        <Tab.Navigator
-          initialRouteName="Search"
+        <Stack.Navigator
           screenOptions={{
-            header: ({options, route}) => {
-              if (route.name === 'Home') {
-                return <TabHeaderHome />;
-              } else if (route.name === 'Search') {
-                return null;
-              }
-              return <TabNavigationHeader />;
+            header: ({route}) => {
+              if (route.name === 'HomeTab') return null;
+              return <DefaultHeader />;
             },
           }}>
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Search" component={SearchScreen} />
-          <Tab.Screen name="Favorites" component={FavoritesScreen} />
-        </Tab.Navigator>
+          <Stack.Screen name="HomeTab" component={HomeBottomTabNavigator} />
+        </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
   );

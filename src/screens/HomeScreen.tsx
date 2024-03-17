@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {AUTHOR_TYPE, FDDR_TYPE, WORKS_TYPE} from '../types';
-import Authors from '../components/Authors';
-import Books from '../components/Books';
+import Authors from '../components/CardViewCompoent';
+import Books from '../components/ListViewComponent';
 
 async function getInitialDetails(): Promise<FDDR_TYPE> {
   const data = await fetch(

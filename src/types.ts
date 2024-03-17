@@ -9,6 +9,8 @@ export type WORKS_TYPE = {
   cover_id: string;
   subject: string[];
   authors: AUTHOR_TYPE[];
+  author_name: string[];
+  cover_i: string;
 };
 
 export type FDDR_TYPE = {

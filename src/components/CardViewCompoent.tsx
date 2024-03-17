@@ -15,7 +15,7 @@ const FlatlistRenderAuthor = memo(({author}: {author: AUTHOR_TYPE}) => {
         alignItems: 'center',
         backgroundColor: 'green',
         marginHorizontal: 10,
-        width: 160,
+        width: 100,
         position: 'relative',
         borderRadius: 20,
         overflow: 'hidden',
@@ -25,8 +25,8 @@ const FlatlistRenderAuthor = memo(({author}: {author: AUTHOR_TYPE}) => {
           uri: `https://covers.openlibrary.org/a/olid/${olid}-M.jpg`,
         }}
         style={{
-          width: 160,
-          height: 260,
+          width: 100,
+          height: 150,
           position: 'absolute',
         }}
       />
@@ -43,7 +43,7 @@ const FlatlistRenderAuthor = memo(({author}: {author: AUTHOR_TYPE}) => {
           alignItems: 'flex-start',
           padding: 20,
         }}>
-        <Text style={{color: 'white', fontSize: 20, fontWeight: '700'}}>
+        <Text style={{color: 'white', fontSize: 12, fontWeight: '700'}}>
           {author.name}
         </Text>
       </LinearGradient>
@@ -51,7 +51,7 @@ const FlatlistRenderAuthor = memo(({author}: {author: AUTHOR_TYPE}) => {
   );
 });
 
-export default function Authors({
+export default function CardViewCompoent({
   author,
 }: {
   author: AUTHOR_TYPE[] | undefined;
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 10,
     width: '100%',
-    height: 285,
+    height: 180,
   },
 });
