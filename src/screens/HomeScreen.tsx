@@ -1,6 +1,8 @@
-import {memo, useEffect, useState} from 'react';
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
-import {AUTHOR_TYPE, FDDR_TYPE} from '../types';
+import {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {AUTHOR_TYPE, FDDR_TYPE, WORKS_TYPE} from '../types';
+import Authors from '../components/Authors';
+import Books from '../components/Books';
 
 async function getInitialDetails(): Promise<FDDR_TYPE> {
   const data = await fetch(
@@ -15,87 +17,28 @@ async function getInitialDetails(): Promise<FDDR_TYPE> {
   };
 }
 
-const RenderItem = memo(({author}: {author: AUTHOR_TYPE}) => {
-  const olid = author.key.split('/')[2];
-
-  return (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'green',
-        marginHorizontal: 10,
-        width: 160,
-        position: 'relative',
-        borderRadius: 20,
-        overflow: 'hidden',
-      }}>
-      <Image
-        source={{
-          uri: `https://covers.openlibrary.org/a/olid/${olid}-M.jpg`,
-        }}
-        style={{
-          width: 160,
-          height: 260,
-          position: 'absolute',
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          backgroundColor: `linear-gradient(to top, #000, #fff)`,
-          width: '100%',
-          height: '50%',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'flex-start',
-          padding: 20,
-        }}>
-        <Text style={{color: 'white', fontSize: 20, fontWeight: '700'}}>
-          {author.name}
-        </Text>
-      </View>
-    </View>
-  );
-});
-
 export default function HomeScreen(): React.JSX.Element {
-  const [data, setData] = useState<AUTHOR_TYPE[] | undefined>(undefined);
+  const [authorData, setAuthorData] = useState<AUTHOR_TYPE[] | undefined>(
+    undefined,
+  );
+  const [worksData, setWorksData] = useState<WORKS_TYPE[] | undefined>(
+    undefined,
+  );
 
   async function getData() {
     const data = await getInitialDetails();
-    setData(data.authors);
+    setAuthorData(data.authors);
+    setWorksData(data.works);
   }
 
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 10,
-          width: '100%',
-          height: 285,
-        }}>
-        <View style={{marginLeft: 12}}>
-          <Text style={{color: 'black', fontSize: 24}}>Authors</Text>
-        </View>
-        {data && (
-          <FlatList
-            data={data}
-            horizontal
-            removeClippedSubviews={true}
-            initialNumToRender={5}
-            renderItem={({item}) => <RenderItem author={item} />}
-          />
-        )}
-      </View>
+      <Authors author={authorData} />
+      <Books works={worksData} />
     </View>
   );
 }
@@ -107,6 +50,7 @@ export function TabHeaderHome({}): React.JSX.Element {
         height: 60,
         width: '100%',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
@@ -125,5 +69,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     height: '100%',
+    gap: 20,
+  },
+  textStyle: {color: '#454545', fontSize: 24, fontWeight: '700'},
+  headingContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 10,
+    width: '100%',
+    height: 285,
   },
 });

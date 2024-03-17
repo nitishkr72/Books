@@ -24,11 +24,13 @@ function App(): React.JSX.Element {
     <NavigationContainer>
       <SafeAreaView style={styles.safeArea}>
         <Tab.Navigator
-          initialRouteName="Home"
+          initialRouteName="Search"
           screenOptions={{
             header: ({options, route}) => {
               if (route.name === 'Home') {
                 return <TabHeaderHome />;
+              } else if (route.name === 'Search') {
+                return null;
               }
               return <TabNavigationHeader />;
             },
