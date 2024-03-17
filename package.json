@@ -1,5 +1,5 @@
 {
-  "name": "Books",
+  "name": "books",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,8 +10,14 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.19",
+    "@react-navigation/native": "^6.1.16",
     "react": "18.2.0",
-    "react-native": "0.73.6"
+    "react-native": "0.73.6",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-reanimated": "^3.8.1",
+    "react-native-safe-area-context": "^4.9.0",
+    "react-native-screens": "^3.29.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
