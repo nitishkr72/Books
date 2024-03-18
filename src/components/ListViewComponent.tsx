@@ -1,7 +1,6 @@
 import React, {memo} from 'react';
 import {AUTHOR_TYPE, WORKS_TYPE} from '../types';
 import {
-  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -12,65 +11,62 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import CustomActivityIndicator from './CustomActivityIndicator';
 
-export const FlatListRenderBook = memo(
-  ({
-    cover_id,
-    title,
-    authors,
-    onClickTitle,
-  }: {
-    cover_id: string;
-    title: string;
-    authors: AUTHOR_TYPE[];
-    onClickTitle: () => void;
-  }) => {
-    return (
-      <View
+export const FlatListRenderBook = ({
+  cover_id,
+  title,
+  authors,
+  onClickTitle,
+}: {
+  cover_id: string;
+  title: string;
+  authors: AUTHOR_TYPE[];
+  onClickTitle: () => void;
+}) => {
+  return (
+    <View
+      style={{
+        marginVertical: 5,
+        height: 150,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+      }}>
+      <Image
+        source={{
+          uri: `https://covers.openlibrary.org/b/id/${cover_id}-M.jpg`,
+        }}
         style={{
-          marginVertical: 5,
-          height: 150,
+          width: 80,
+          height: 120,
+        }}
+      />
+      <TouchableOpacity
+        onPress={() => onClickTitle()}
+        style={{
+          height: '100%',
           display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          borderBottomWidth: 1,
-          borderBottomColor: '#ccc',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          marginLeft: 10,
+          marginBottom: 35,
         }}>
-        <Image
-          source={{
-            uri: `https://covers.openlibrary.org/b/id/${cover_id}-M.jpg`,
-          }}
-          style={{
-            width: 80,
-            height: 120,
-          }}
-        />
-        <TouchableOpacity
-          onPress={() => onClickTitle()}
-          style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            marginLeft: 10,
-            marginBottom: 35,
-          }}>
-          <Text style={{color: '#454545', fontSize: 20, fontWeight: '700'}}>
-            {title}
-          </Text>
-          {authors &&
-            authors.slice(0, 2).map((item, index) => {
-              return (
-                <Text key={index} style={{color: '#454545'}}>
-                  {item.name}
-                </Text>
-              );
-            })}
-        </TouchableOpacity>
-      </View>
-    );
-  },
-);
-
+        <Text style={{color: '#454545', fontSize: 20, fontWeight: '700'}}>
+          {title}
+        </Text>
+        {authors &&
+          authors.slice(0, 2).map((item, index) => {
+            return (
+              <Text key={index} style={{color: '#454545'}}>
+                {item.name}
+              </Text>
+            );
+          })}
+      </TouchableOpacity>
+    </View>
+  );
+};
 export default function ListViewComponent({
   works,
 }: {

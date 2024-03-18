@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 export default function HomeBottomTabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Search"
+      initialRouteName="Home"
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;

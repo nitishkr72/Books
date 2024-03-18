@@ -1,10 +1,13 @@
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {FavoritesBookContext} from '../context/FavoritesBookContext';
 import FavoritesBookListView from '../components/FavoritesBookListView';
+import {WORKS_TYPE} from '../types';
+import {getBookDetail} from '../API';
 
 export default function FavoritesScreen(): React.JSX.Element {
   const {keys} = useContext(FavoritesBookContext);
+
   return (
     <View style={styles.container}>
       <View

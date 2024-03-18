@@ -26,7 +26,9 @@ export function FavoritesBookContextProvider({children}: any) {
   const [keys, setKeys] = useState<string[]>([]);
 
   const addKey = (key: string) => {
+    console.log(key);
     setKeys(prev => [key, ...prev]);
+    storeData('BOOK_ID', keys);
   };
 
   const removeKey = (key: string) => {
@@ -52,10 +54,6 @@ export function FavoritesBookContextProvider({children}: any) {
       console.error('Error retrieving data from AsyncStorage:', error);
     }
   };
-
-  useEffect(() => {
-    storeData('BOOK_ID', keys);
-  }, [keys]);
 
   useEffect(() => {
     getData('BOOK_ID');
