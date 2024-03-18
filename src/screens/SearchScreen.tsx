@@ -3,6 +3,7 @@ import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {AUTHOR_TYPE, WORKS_TYPE} from '../types';
 import {FlatListRenderBook} from '../components/ListViewComponent';
+import {useNavigation} from '@react-navigation/native';
 
 async function getSearchedBookTitle(searchText: string): Promise<WORKS_TYPE[]> {
   const search = searchText.trim().split(' ').join('+');
@@ -17,6 +18,7 @@ export default function SearchScreen(): React.JSX.Element {
   const [searchedBooks, setSearchedBooks] = useState<WORKS_TYPE[] | undefined>(
     undefined,
   );
+  const navigation = useNavigation();
 
   async function handleSearchText(searchText: string) {
     const data = await getSearchedBookTitle(searchText);
@@ -51,6 +53,9 @@ export default function SearchScreen(): React.JSX.Element {
                   cover_id={item.cover_i}
                   title={item.title}
                   authors={author}
+                  onClickTitle={() => {
+                    navigation.navigate('BookDetail', {key: item.key});
+                  }}
                 />
               );
             }}

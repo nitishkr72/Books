@@ -1,27 +1,30 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import DefaultHeader from './components/DefaultHeader';
 import HomeBottomTabNavigator from './navigation/HomeBottomTabNavigator';
+import BookDetailScreen from './screens/BookDetailScreen';
+import {FavoritesBookContextProvider} from './context/FavoritesBookContext';
 
 const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
   return (
-    <NavigationContainer>
-      <SafeAreaView style={styles.safeArea}>
-        <Stack.Navigator
-          screenOptions={{
-            header: ({route}) => {
-              if (route.name === 'HomeTab') return null;
-              return <DefaultHeader />;
-            },
-          }}>
-          <Stack.Screen name="HomeTab" component={HomeBottomTabNavigator} />
-        </Stack.Navigator>
-      </SafeAreaView>
-    </NavigationContainer>
+    <FavoritesBookContextProvider>
+      <NavigationContainer>
+        <SafeAreaView style={styles.safeArea}>
+          <Stack.Navigator
+            screenOptions={{
+              header: ({}) => {
+                return null;
+              },
+            }}>
+            <Stack.Screen name="HomeTab" component={HomeBottomTabNavigator} />
+            <Stack.Screen name="BookDetail" component={BookDetailScreen} />
+          </Stack.Navigator>
+        </SafeAreaView>
+      </NavigationContainer>
+    </FavoritesBookContextProvider>
   );
 }
 

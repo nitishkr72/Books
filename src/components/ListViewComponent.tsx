@@ -1,16 +1,26 @@
 import React, {memo} from 'react';
 import {AUTHOR_TYPE, WORKS_TYPE} from '../types';
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 export const FlatListRenderBook = memo(
   ({
     cover_id,
     title,
     authors,
+    onClickTitle,
   }: {
     cover_id: string;
     title: string;
     authors: AUTHOR_TYPE[];
+    onClickTitle: () => void;
   }) => {
     return (
       <View
@@ -32,7 +42,8 @@ export const FlatListRenderBook = memo(
             height: 120,
           }}
         />
-        <View
+        <TouchableOpacity
+          onPress={() => onClickTitle()}
           style={{
             height: '100%',
             display: 'flex',
@@ -52,7 +63,7 @@ export const FlatListRenderBook = memo(
                 </Text>
               );
             })}
-        </View>
+        </TouchableOpacity>
       </View>
     );
   },
@@ -63,6 +74,8 @@ export default function ListViewComponent({
 }: {
   works: WORKS_TYPE[] | undefined;
 }): React.JSX.Element {
+  const navigation = useNavigation();
+
   return (
     <View style={[styles.headingContainer, {flex: 1, marginLeft: 12}]}>
       <View>
@@ -80,6 +93,9 @@ export default function ListViewComponent({
                 cover_id={item.cover_id}
                 title={item.title}
                 authors={item.authors}
+                onClickTitle={() => {
+                  navigation.navigate('BookDetail', {key: item.key});
+                }}
               />
             );
           }}

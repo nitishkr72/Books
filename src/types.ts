@@ -11,6 +11,8 @@ export type WORKS_TYPE = {
   authors: AUTHOR_TYPE[];
   author_name: string[];
   cover_i: string;
+  covers: string[];
+  description: string;
 };
 
 export type FDDR_TYPE = {
