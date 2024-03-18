@@ -4,34 +4,44 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {AUTHOR_TYPE, WORKS_TYPE} from '../types';
 import {FlatListRenderBook} from '../components/ListViewComponent';
 import {useNavigation} from '@react-navigation/native';
+import {getSearchedBookTitle} from '../API';
+import CustomActivityIndicator from '../components/CustomActivityIndicator';
 
-async function getSearchedBookTitle(searchText: string): Promise<WORKS_TYPE[]> {
-  const search = searchText.trim().split(' ').join('+');
-  const data = await fetch(
-    `https://openlibrary.org/search.json?title=${search}`,
-  );
-  const jsonData = await data.json();
-  return jsonData.docs;
-}
+type SEARCH_ACTION_TYPE = 'INITIAL' | 'SEARCHING' | 'SEARCH_RESULT';
 
 export default function SearchScreen(): React.JSX.Element {
   const [searchedBooks, setSearchedBooks] = useState<WORKS_TYPE[] | undefined>(
     undefined,
   );
+  const [searchAction, setSearchAction] =
+    useState<SEARCH_ACTION_TYPE>('INITIAL');
   const navigation = useNavigation();
 
   async function handleSearchText(searchText: string) {
+    setSearchAction('SEARCHING');
     const data = await getSearchedBookTitle(searchText);
-    console.log(data.length);
 
     setSearchedBooks(data);
+    setSearchAction('SEARCH_RESULT');
   }
 
   return (
     <View style={styles.container}>
       <TabHeaderSearch updateSearch={handleSearchText} />
       <View style={{marginHorizontal: 12}}>
-        {searchedBooks && (
+        {searchAction === 'SEARCHING' ? (
+          <CustomActivityIndicator />
+        ) : searchAction === 'INITIAL' ? (
+          <View
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+            }}>
+            <Text style={{color: '#ccc', fontSize: 24}}>Search Book title</Text>
+          </View>
+        ) : (
           <FlatList
             data={searchedBooks}
             removeClippedSubviews={true}

@@ -4,19 +4,12 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {WORKS_TYPE} from '../types';
 import {FavoritesBookContext} from '../context/FavoritesBookContext';
-
-async function getBookDetail(key: string): Promise<WORKS_TYPE> {
-  const data = await fetch(`https://openlibrary.org/works/${key}.json`);
-
-  const json_data = await data.json();
-  console.log(json_data);
-
-  return json_data;
-}
+import {getBookDetail} from '../API';
+import CustomActivityIndicator from '../components/CustomActivityIndicator';
 
 export default function BookDetailScreen({route}) {
   const [bookData, setBookData] = useState<WORKS_TYPE | undefined>(undefined);
-  const key = route.params.key.trim().split('/')[2];
+  const key = route.params.key.replace('/works/', '');
 
   async function getBookData(key: string) {
     const data = await getBookDetail(key);
@@ -30,7 +23,9 @@ export default function BookDetailScreen({route}) {
   return (
     <View style={styles.container}>
       <TabHeader bookID={key} />
-      {bookData && (
+      {bookData === undefined ? (
+        <CustomActivityIndicator />
+      ) : (
         <View
           style={{
             paddingHorizontal: 12,

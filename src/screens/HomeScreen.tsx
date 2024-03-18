@@ -3,19 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {AUTHOR_TYPE, FDDR_TYPE, WORKS_TYPE} from '../types';
 import Authors from '../components/CardViewCompoent';
 import Books from '../components/ListViewComponent';
-
-async function getInitialDetails(): Promise<FDDR_TYPE> {
-  const data = await fetch(
-    'https://openlibrary.org/subjects/sci-fi.json?details=true',
-  );
-
-  const json_data = await data.json();
-
-  return {
-    works: json_data.works,
-    authors: json_data.authors,
-  };
-}
+import {getInitialDetails} from '../API';
 
 export default function HomeScreen(): React.JSX.Element {
   const [authorData, setAuthorData] = useState<AUTHOR_TYPE[] | undefined>(

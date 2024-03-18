@@ -1,5 +1,12 @@
 import React, {memo} from 'react';
-import {FlatList, StyleSheet, Image, Text, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import {AUTHOR_TYPE} from '../types';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -61,7 +68,9 @@ export default function CardViewCompoent({
       <View style={{marginLeft: 12}}>
         <Text style={styles.textStyle}>Authors</Text>
       </View>
-      {author && (
+      {author === undefined ? (
+        <ActivityIndicator />
+      ) : (
         <FlatList
           data={author}
           horizontal

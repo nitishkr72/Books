@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
 import {AUTHOR_TYPE, WORKS_TYPE} from '../types';
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import CustomActivityIndicator from './CustomActivityIndicator';
 
 export const FlatListRenderBook = memo(
   ({
@@ -77,11 +79,13 @@ export default function ListViewComponent({
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.headingContainer, {flex: 1, marginLeft: 12}]}>
+    <View style={[styles.headingContainer, {flex: 1, marginLeft: 15}]}>
       <View>
         <Text style={styles.textStyle}>Just for you</Text>
       </View>
-      {works && (
+      {works === undefined ? (
+        <CustomActivityIndicator />
+      ) : (
         <FlatList
           data={works}
           removeClippedSubviews={true}
